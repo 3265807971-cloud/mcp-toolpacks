@@ -1,0 +1,25 @@
+{
+  "name": "mcp-toolpacks",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Group MCP tools by purpose, not by server — one switch per pack.",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "llm",
+    "tools",
+    "context-window"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

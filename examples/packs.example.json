@@ -1,0 +1,83 @@
+{
+  "_comment": [
+    "An example pack table, using only well-known public MCP servers.",
+    "",
+    "Notice the shape of the problem it solves: the `github` server bundles four",
+    "unrelated domains — code, issues, pull requests and notifications — behind a",
+    "single on/off switch. Packs let you reach into it by purpose.",
+    "",
+    "`filesystem::read_file` is deliberately claimed by TWO packs (`code` and",
+    "`files`). That's the normal case: packs overlap, and turning one on must not",
+    "turn the other off.",
+    "",
+    "`disabled` is the list of tools nobody claims, WITH a reason next to each.",
+    "Write the reason in a comment in your own code; this file keeps it as prose",
+    "because JSON has no comments."
+  ],
+
+  "_disabledWhy": {
+    "github": {
+      "list_notifications": "the client renders notifications itself; this tool just duplicates it and costs ~400 tokens per request",
+      "mark_notification_read": "same — the client marks reads locally"
+    }
+  },
+
+  "packs": [
+    {
+      "id": "code",
+      "title": "Reading code",
+      "desc": "Find files, search, read history — for asking questions about a repo",
+      "localTools": ["clipboard"],
+      "mcpTools": {
+        "github": ["get_file", "search_code", "list_commits"],
+        "filesystem": ["read_file", "list_directory"]
+      }
+    },
+    {
+      "id": "issues",
+      "title": "Working issues",
+      "desc": "Read, file, close and comment on issues",
+      "mcpTools": {
+        "github": ["list_issues", "create_issue", "close_issue", "comment_issue"]
+      }
+    },
+    {
+      "id": "pulls",
+      "title": "Pull requests",
+      "desc": "Open, review and merge PRs",
+      "mcpTools": {
+        "github": ["create_pull_request", "review_pull_request", "merge_pull_request"]
+      },
+      "note": "Merge is destructive — some clients put this pack behind a confirmation."
+    },
+    {
+      "id": "files",
+      "title": "Editing files",
+      "desc": "Read, write, move — for actually changing things on disk",
+      "localTools": ["clipboard"],
+      "mcpTools": {
+        "filesystem": ["read_file", "write_file", "list_directory", "move_file"]
+      }
+    },
+    {
+      "id": "data",
+      "title": "Querying data",
+      "desc": "Look at tables and run read queries",
+      "mcpTools": {
+        "postgres": ["query", "list_tables"]
+      }
+    },
+    {
+      "id": "chat",
+      "title": "Posting to Slack",
+      "desc": "Send messages and upload files to your workspace",
+      "mcpTools": {
+        "slack": ["list_channels", "send_message", "upload_file"]
+      }
+    }
+  ],
+
+  "disabled": {
+    "github": ["list_notifications", "mark_notification_read"]
+  }
+}
